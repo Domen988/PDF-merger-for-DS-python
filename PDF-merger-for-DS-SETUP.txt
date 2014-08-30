@@ -1,0 +1,58 @@
+53959
+: 1 2 3 4 5 6 7 8
+ HalC1: 1 4 7 8
+ HalC2: 1 4 6 7 8
+ HalB RSW CRB: 1 3 4 6 7 8
+ Montagen: 1 2 4 5 6 7
+##########################################################################################
+# Instructions for using PDF-merger-for-DS                                               #
+# Made by Domen Zagar, zagar.domen@gmail.com                                             #
+#                                                                                        #
+# Merger combines pdf documents in current folder.                                       #
+# PDF-merger-for-DS.exe works only with well formed PDF-merger-for-DS-SETUP.txt file!    #
+# ---------------------------------------------------------------------------------------#
+# PDF naming                                                                             #
+# All pdf's to be merged must have a number prefix. You can use numbers from 0 to 9,     #
+# followed by a single whitespace. Documents are merged in ascending order of their      #
+# number prefixes.                                                                       #
+# You can also use a second layer for merging documents, if you use a second number      #
+# after the whitespace. This number can also  be in range from 0 to 9. All documents     #
+# with the same first number are merged in groups.                                       #
+#                                                                                        #
+# Example:                                                                               #
+# +-------------+                                                                        #
+# |1 1 asdf.pdf |                                                                        #
+# |1 2 qwer.pdf | -> merged together in group 1                                          #
+# |1 3 yxcv.pdf |                                                                        #
+# +-------------+                                                                        #
+# |2 1 fghj.pdf |                                                                        #
+# |2 2 ertz.pdf | -> merged together in group 2                                          #
+# |2 3 ghjk.pdf |                                                                        #
+# +-------------+                                                                        #
+#                                                                                        #
+# This won't work:                                                                       #
+# +-------------+                                                                        #
+# |1 asdf.pdf   | -> second layer number is missing. Document sequence will be corrupt!  #
+# |1 2 qwer.pdf |                                                                        #
+# |1 3 yxcv.pdf |                                                                        #
+# +-------------+                                                                        #
+#                                                                                        #
+# ---------------------------------------------------------------------------------------#
+# Setup file preparation                                                                 #
+#                                                                                        #
+# First line of txt document is used as a project name for all reports created.          #
+# Subsequent lines are used for creating different pdf groups variations. A colon in     #
+# these lines divides variation name and combination of pdf groups. Combination of pdf's #
+# is specified with a sequence of pdf group numbers separated by whitespaces.            #
+# Number of report variations is arbitrary.                                              #
+#                                                                                        #
+# Example:                                                                               #
+# +-------------+                                                                        #
+# |XXXXXX       | -> project name                                                        #
+# |: 1 2 3 4 5  | -> creates document "XXXXX.pdf", which includes pdf groups 1 - 5       #
+# | YY: 1 2 3   | -> creates document "XXXXX YY.pdf" which includes pdf groups 1 - 3     #
+# | ZZ: 2 4     | -> creates document "XXXXX ZZ.pdf" which includes pdf groups 2 and 4   #
+# +-------------+                                                                        #
+#                                                                                        #
+# All lines starting with '#' are ignored.                                               #
+##########################################################################################
