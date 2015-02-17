@@ -1,6 +1,6 @@
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from os import listdir
-from os.path import isfile, join, dirname, abspath
+from os.path import isfile, join, dirname, abspath, basename
 import re
 import sys
 
@@ -18,20 +18,23 @@ onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, str(f)))]
 
 # reads project name and reports settings
 try:
-    fp = open('PDF-merger-for-DS-SETUP.txt', 'r')
-except:
-    MessageBox(text="Setup folder 'PDF-merger-for-DS-SETUP' is missing.\nApplicataion will exit.")
-    sys.exit()
-try:
+    for f in listdir(mypath):
+        if isfile(join(mypath, str(f))):
+            if f.startswith("PDF-merger_") and f.endswith(".txt"):
+                setupFileLoc = f
+                projectName = (f.split("PDF-merger_"))[1].split(".txt")[0]
+    fp = open(setupFileLoc, 'r')
     setupFile = fp.readlines()
-    projectName = setupFile[0].strip()
 except:
-    MessageBox(text="Setup folder 'PDF-merger-for-DS-SETUP' is empty. Name could not be read.\nApplicataion will exit.")
+    MessageBox(text="Setup file 'PDF-merger_ ... .txt' is missing.\nApplicataion will exit.")
+    sys.exit()
+if len(projectName) == 0:
+    MessageBox(text="Setup file has no project name defined.\nApplicataion will exit.")
     sys.exit()
 
 reportsSpec = []
 try:
-    for line in setupFile[1:]:
+    for line in setupFile:
         if line.startswith("#"):
             continue
         repName = re.split(":", line)[0]
@@ -40,14 +43,16 @@ try:
             repSpec.append(int(num))
         reportsSpec.append((repName, repSpec))
 except:
-    MessageBox(text='Setup folder reports setttings corrupted.\nApplicataion will exit.')
+    MessageBox(text='Setup folder reports setttings corrupted.\nApplication will exit.')
     sys.exit()
 fp.close()
 
 print "------------------------------------------------------"
 print "PDF-merger-for-DS"
 print "Created by Domen Zagar, zagar.domen@gmail.com"
-print "------------------------------------------------------"
+print "version 1.01, 2014-09-02"
+print "version 1.02, 2015-02-17: read project name from setup file name"
+print "------------------------------------------------------\n"
 print "Creating reports for project", projectName
 filenames = []
 for f in onlyfiles:
@@ -60,6 +65,10 @@ for f in onlyfiles:
 def append_pdf(input,output):
     [output.addPage(input.getPage(page_num)) for page_num in range(input.numPages)]
 
+
+notWritten = []
+empty = []
+problems = False
 bar = False
 for report in reportsSpec:
     reportName = projectName + report[0] + ".pdf"
@@ -75,14 +84,32 @@ for report in reportsSpec:
     try:
         print "Combining files:"
         merger = PdfFileWriter()
+        atLeastOne = False
         for filename in filenames:
             if int(re.split('[ .]', filename)[0]) in report[1]:
                 append_pdf(PdfFileReader(mypath + "\\" +filename, 'rb'), merger)
                 print "\t", filename
-        merger.write(file(join(mypath, reportName), 'wb'))
-        print reportName, "written."
+                atLeastOne = True
+        if atLeastOne is True:
+            merger.write(file(join(mypath, reportName), 'wb'))
+            print reportName, "written."
+        else:
+            empty.append(reportName)
+            print reportName, "was not succesfully written - found no files to constitute"
+            problems = True
     except:
-        print reportName, "was not successfully written."
+        print reportName, "was not successfully written. - could not write"
+        notWritten.append(reportName)
+        problems = True
 print "------------------"
-print "Success!"
+if problems == False:
+    print "Success!"
+else:
+    print "Next files were not written:"
+    for rep in notWritten:
+        print rep, "\t\t\t\tcould not write"
+    for rap in empty:
+        print rap, "\t\t\t\tnothing to merge"
+    MessageBox(text='Some files were not written. See console application for the list of files.\nCheck if this files are closed and try again.')
+
 raw_input("Press any key to exit.")

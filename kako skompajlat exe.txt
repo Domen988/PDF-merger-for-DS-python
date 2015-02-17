@@ -1,0 +1,8 @@
+skripta mora delat
+
+gres v mapo od pyinstallerja, not vrzes skripto
+poisces pyinstallerjevo (PI) mapo v cmd-ju
+zazenes:
+	python pyinstaller.py ImeSkripte.py --onefile
+
+to je to
