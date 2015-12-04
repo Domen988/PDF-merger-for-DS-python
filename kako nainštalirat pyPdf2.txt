@@ -1,0 +1,25 @@
+From: http://stackoverflow.com/questions/22106380/how-do-i-install-pypdf2-module-using-windows
+------------------------------------------------------------------------------------------------------------
+
+To install setup.py files under Windows you can choose this way with the command line:
+
+hit windows key
+type cmd
+excute the command line (black window)
+type cd C:\Users\User\Downloads\pyPDF2 to go into the directory where the setup.py is (this is mine if I downloaded it) The path can be copied from the explorer window.
+type dir now you should see the name setup.py in the listing of all contents
+type C:\python27\python.exe setup.py install I use Python2.7 here. Use C:\python33\python.exe setup.py install for python 3.3 and so on. You can follow these instructions now if you wish: http://docs.python.org/2/install/index.html
+Another way, that does not show when there are problems, is:
+
+create a shortcut to setup.py
+open the properties of the shortcut. There should be a path like this: C:\Users\User\Downloads\pyPDF2\setup.py (this is where my setup.py is)
+you modify that path in the following way:
+
+"C:\Users\User\Downloads\pyPDF2\setup.py" install
+The " are important if you have white spaces in the path name
+
+click OK to save the modifications to the setup.py - shortcut
+double-click the setup.py - shortcut.
+In all cases you may need to restart your python to be able to import the module.
+
+When you do this feel free to post your solution also with pictures for other newbies looking for it.

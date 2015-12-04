@@ -52,6 +52,7 @@ print "PDF-merger-for-DS"
 print "Created by Domen Zagar, zagar.domen@gmail.com"
 print "version 1.01, 2014-09-02"
 print "version 1.02, 2015-02-17: read project name from setup file name"
+print "version 1.03, 2015-12-04: sorting of the pdfs updated"
 print "------------------------------------------------------\n"
 print "Creating reports for project", projectName
 filenames = []
@@ -61,6 +62,8 @@ for f in onlyfiles:
         if foo.isdigit() and int(foo) <= 9:
             filenames.append(f)
 
+# keeps files in order
+filenames.sort()
 
 def append_pdf(input,output):
     [output.addPage(input.getPage(page_num)) for page_num in range(input.numPages)]

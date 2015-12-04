@@ -1,4 +1,4 @@
-('D:\\Programs-Archive\\PDF-merger-for-DS-python\\PyInstaller-2.1\\PDF-merger-for-DS\\dist\\PDF-merger-for-DS.exe',
+('C:\\Users\\dza\\Documents\\GitHub\\PDF-merger-for-DS-python\\PyInstaller-2.1\\PDF-merger-for-DS\\dist\\PDF-merger-for-DS.exe',
  True,
  False,
  None,
@@ -6,4 +6,4 @@
  [],
  None,
  False,
- 1424204155L)
+ 1449225369L)

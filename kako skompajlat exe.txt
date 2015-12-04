@@ -4,5 +4,6 @@ gres v mapo od pyinstallerja, not vrzes skripto
 poisces pyinstallerjevo (PI) mapo v cmd-ju
 zazenes:
 	python pyinstaller.py ImeSkripte.py --onefile
+(	python pyinstaller.py PDF-merger-for-DS.py --onefile    )
 
 to je to
